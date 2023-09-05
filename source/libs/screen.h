@@ -5,9 +5,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
-#define HEIGHT 30
-#define LENGTH 60
+#define HEIGHT 50
+#define LENGTH 100
 
 char *table[HEIGHT];
 
