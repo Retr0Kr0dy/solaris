@@ -35,4 +35,20 @@ char **get_background() {
     return table;
 }
 
+char **get_elements() {
+    for (int i = 0; i < HEIGHT; i++) {
+        table[i] = (char *)malloc(LENGTH * sizeof(char));
+        for (int j = 0; j < LENGTH; j++) {
+            if (i == 0 || j == 0 || i == HEIGHT - 1 || j == LENGTH - 1) {
+                table[i][j] = '#';
+            } else {
+                table[i][j] = ' ';
+            }
+        }
+    }
+
+    return table;
+}
+
+
 #endif

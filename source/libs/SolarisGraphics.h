@@ -9,18 +9,20 @@ extern int FREQUENCY;
 
 void show(char **table);
 char **get_back_ground();
+char **get_elements();
+
+struct timespec start_time;
+struct timespec from_start;
+struct timespec current_time;
+
+int ips = 0;
+int ifs = 0;
+int elapsed_time = 0;
+int from_start_time = 0;
+char **elem;
 
 void SolarisGraphics()
 {
-    struct timespec start_time;
-    struct timespec from_start;
-    struct timespec current_time;
-
-    int ips = 0;
-    int ifs = 0;
-    int elapsed_time = 0;
-    int from_start_time = 0;
-
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     current_time = start_time;
 
@@ -39,8 +41,8 @@ void SolarisGraphics()
 
         if (elapsed_time >= FREQUENCY)
         {
-            char **bkgd = get_background();
-            show(bkgd);
+            elem = get_elements();
+            show(elem);
 
 if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
