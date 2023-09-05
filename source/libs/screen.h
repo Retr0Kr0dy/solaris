@@ -1,11 +1,15 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
+
 #define HEIGHT 30
 #define LENGTH 60
 
-char *table[HEIGHT]; 
+char *table[HEIGHT];
 
 void show(char **table) {
     system("clear");
@@ -31,3 +35,5 @@ char **get_background() {
 
     return table;
 }
+
+#endif
