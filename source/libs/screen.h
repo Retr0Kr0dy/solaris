@@ -37,6 +37,8 @@ char **get_background() {
 
 static int x = 2;
 static int y = 2;
+int x_spd = 1;
+int y_spd = 1;
 static char charc = 'O';
 
 void **moving_dot()
@@ -46,7 +48,7 @@ void **moving_dot()
     elem[1] = &y;
     elem[2] = &charc;
 
-    if (x < LENGTH - 2)
+/*    if (x < LENGTH - 2)
     {
         if (y >= HEIGHT - 2)
         {
@@ -59,6 +61,17 @@ void **moving_dot()
         x = 2;
         y++;
     }
+*/
+    if (x <= 0 || x >= LENGTH - 2)
+    {
+        x_spd = -x_spd;
+    }
+    if (y <= 0 || y >= HEIGHT - 2)
+    {
+        y_spd = -y_spd;
+    }
+    x+=x_spd;
+    y+=y_spd;
 
     return elem;
 }
