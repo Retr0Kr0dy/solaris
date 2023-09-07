@@ -13,7 +13,7 @@ extern int DEBUG;
 char *table[HEIGHT];
 
 void show(char **table) {
-    system("clear");
+    printf ("\033[H\033[2J");
     for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < LENGTH; j++) {
             printf ("%c", table[i][j]);

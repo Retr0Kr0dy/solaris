@@ -2,7 +2,7 @@
 #include <string.h>
 
 int DEBUG = 0; // default no debug
-int FREQUENCY = 33; // default 33 milliseconds for 30 frame per second.
+int FREQUENCY = 16; // default 16 ms for approx. 60 fps, 33 ms for 30 fps.
 
 int main(int argc, char *argv[])
 {

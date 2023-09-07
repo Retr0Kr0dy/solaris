@@ -15,8 +15,8 @@ struct timespec start_time;
 struct timespec from_start;
 struct timespec current_time;
 
-int ips = 0;
-int ifs = 0;
+int fps = 0;
+int ffs = 0;
 int elapsed_time = 0;
 int from_start_time = 0;
 char **elem;
@@ -61,13 +61,13 @@ void SolarisGraphics()
 
 if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
-        ips = ifs / (from_start_time / 1000);
+        fps = ffs / (from_start_time / 1000);
     }
-    printf("time = %4d\tifs = %4d\tips = %4d\txy = %3d,%3d\told_xy = %3d,%3d\n", (from_start_time / 1000), ifs, ips, x, y, prev_x_pos, prev_y_pos);
+    printf("time = %4d\tffs = %4d\tfps = %4d\txy = %3d,%3d\told_xy = %3d,%3d\n", (from_start_time / 1000), ffs, fps, x, y, prev_x_pos, prev_y_pos);
 }
 
             start_time = current_time;
-            ifs++;
+            ffs++;
         }
     }
 }
