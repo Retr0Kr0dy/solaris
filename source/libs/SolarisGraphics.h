@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include <time.h>
+#include <sys/resource.h>
 
 extern int DEBUG;
 extern int FREQUENCY;
@@ -20,8 +21,8 @@ int _ffs = 0;
 int elapsed_time = 0;
 int from_start_time = 0;
 char **elem;
-
-
+struct rusage usage;
+long mem;
 
 extern int x;
 extern int y;
@@ -63,9 +64,15 @@ if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
         _fps = _ffs / (from_start_time / 1000);
     }
-    printf("time = %4d\tffs = %4d\tfps = %4d\txy = %3d,%3d\told_xy = %3d,%3d\n", (from_start_time / 1000), _ffs, _fps, x, y, prev_x_pos, prev_y_pos);
-}
 
+    if (getrusage(RUSAGE_SELF, &usage) == 0) {
+        mem = usage.ru_maxrss;
+    } else {
+        mem = 0;
+    }
+
+    printf("time = %4d\tffs = %4d\tfps = %4d\tmem = %ld Kb\txy = %3d,%3d\told_xy = %3d,%3d\n", (from_start_time / 1000), _ffs, _fps, mem, x, y, prev_x_pos, prev_y_pos);
+}
             start_time = current_time;
             _ffs++;
         }
