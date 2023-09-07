@@ -8,6 +8,8 @@
 #define HEIGHT 50
 #define LENGTH 100
 
+extern int DEBUG;
+
 char *table[HEIGHT];
 
 void show(char **table) {
@@ -19,6 +21,27 @@ void show(char **table) {
         printf ("\n");
     }
 }
+
+
+void **create_table() {
+  for (int i = 0; i < HEIGHT; i++) {
+    table[i] = (char *)malloc(LENGTH * sizeof(char));
+  }
+}
+
+
+void **get_square() {
+  for (int i = 0; i < HEIGHT; i++) {
+    for (int j = 0; j < LENGTH; j++) {
+      if (i == 0 || j == 0 || i == HEIGHT - 1 || j == LENGTH - 1) {
+        table[i][j] = '#';
+      } else {
+        table[i][j] = ' ';
+      }
+    }
+  }
+}
+
 
 char **get_background() {
     for (int i = 0; i < HEIGHT; i++) {
@@ -37,66 +60,67 @@ char **get_background() {
 
 static int x = 2;
 static int y = 2;
+int prev_x_pos;
+int prev_y_pos;
 int x_spd = 1;
 int y_spd = 1;
 static char charc = 'O';
+static char prev_char = ' ';
+static char nxt;
 
 void **moving_dot()
 {
-    static void *elem[3];
+    static void *elem[6];
     elem[0] = &x;
     elem[1] = &y;
-    elem[2] = &charc;
+    elem[2] = &prev_x_pos;
+    elem[3] = &prev_y_pos;
+    elem[4] = &charc;
+    elem[5] = &prev_char;
 
-/*    if (x < LENGTH - 2)
-    {
-        if (y >= HEIGHT - 2)
-        {
-            y = 2;
-        }
-        x+=3;
-    }
-    else
-    {
-        x = 2;
-        y++;
-    }
-*/
-    if (x <= 0 || x >= LENGTH - 2)
+    prev_char = &nxt;
+
+    if (x <= 0 || x >= HEIGHT - 2)
     {
         x_spd = -x_spd;
     }
-    if (y <= 0 || y >= HEIGHT - 2)
+    if (y <= 0 || y >= LENGTH - 2)
     {
         y_spd = -y_spd;
     }
     x+=x_spd;
     y+=y_spd;
 
+    nxt = &charc;
+
     return elem;
 }
 
 char **get_elements() {
     void **temp = moving_dot();
-    void *elem[3] = {*(int **) temp, *(int **) (temp + 1), *(char **) (temp + 2)};
+    void *elem[6] = {*(int **) temp, *(int **) (temp + 1),*(int **) (temp + 2), *(int **) (temp + 3), *(char **) (temp + 4), *(char **) (temp + 5)};
 
     int x_pos = *(int*) elem[0];
     int y_pos = *(int*) elem[1];
-    char chr = *(char*) elem[2];
+    int prev_x_pos = *(int*) elem[2];
+    int prev_y_pos = *(int*) elem[3];
+    char chr = *(char*) elem[4];
+    char prev_char = *(char*) elem[5];
 
+    table[x_pos][y_pos] = chr;
+    table[prev_x_pos][prev_y_pos] = prev_char;
+
+
+
+/*
     for (int i = 0; i < HEIGHT; i++) {
-        table[i] = (char *)malloc(LENGTH * sizeof(char));
         for (int j = 0; j < LENGTH; j++) {
-            if (i == 0 || j == 0 || i == HEIGHT - 1 || j == LENGTH - 1) {
-                table[i][j] = '#';
-            } else if (i == y_pos && j == x_pos) {
+            if (table[x_pos][y_pos] != table[i][j]) {
                 table[i][j] = chr;
-            } else {
-                table[i][j] = ' ';
             }
         }
     }
-
+*/
     return table;
 }
 

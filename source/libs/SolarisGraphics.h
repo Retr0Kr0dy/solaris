@@ -21,6 +21,13 @@ int elapsed_time = 0;
 int from_start_time = 0;
 char **elem;
 
+
+
+extern int x;
+extern int y;
+
+
+
 void SolarisGraphics()
 {
     clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -28,6 +35,13 @@ void SolarisGraphics()
 
     clock_gettime(CLOCK_MONOTONIC, &from_start);
     current_time = from_start;
+
+/* Creating Screen */
+
+create_table();
+get_square();
+
+/* End */
 
     while (1)
     {
@@ -48,7 +62,7 @@ if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
         ips = ifs / (from_start_time / 1000);
     }
-    printf("time = %4d\tifs = %4d\tips = %4d\n", (from_start_time / 1000), ifs, ips);
+    printf("time = %4d\tifs = %4d\tips = %4d\tx = %3d\ty = %3d\n", (from_start_time / 1000), ifs, ips,x,y);
 }
 
             start_time = current_time;
