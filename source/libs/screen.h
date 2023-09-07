@@ -58,15 +58,14 @@ char **get_background() {
     return table;
 }
 
-static int x = 2;
-static int y = 2;
+static int x = 25;
+static int y = 50;
 int prev_x_pos;
 int prev_y_pos;
 int x_spd = 1;
 int y_spd = 1;
 static char charc = 'O';
 static char prev_char = ' ';
-static char nxt;
 
 void **moving_dot()
 {
@@ -78,20 +77,19 @@ void **moving_dot()
     elem[4] = &charc;
     elem[5] = &prev_char;
 
-    prev_char = &nxt;
+    prev_x_pos = x;
+    prev_y_pos = y;
 
-    if (x <= 0 || x >= HEIGHT - 2)
+    if (x <= 1 || x >= HEIGHT - 2)
     {
         x_spd = -x_spd;
     }
-    if (y <= 0 || y >= LENGTH - 2)
+    if (y <= 1 || y >= LENGTH - 2)
     {
         y_spd = -y_spd;
     }
     x+=x_spd;
     y+=y_spd;
-
-    nxt = &charc;
 
     return elem;
 }
@@ -110,17 +108,6 @@ char **get_elements() {
     table[x_pos][y_pos] = chr;
     table[prev_x_pos][prev_y_pos] = prev_char;
 
-
-
-/*
-    for (int i = 0; i < HEIGHT; i++) {
-        for (int j = 0; j < LENGTH; j++) {
-            if (table[x_pos][y_pos] != table[i][j]) {
-                table[i][j] = chr;
-            }
-        }
-    }
-*/
     return table;
 }
 

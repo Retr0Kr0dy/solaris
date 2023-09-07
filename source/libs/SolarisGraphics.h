@@ -25,7 +25,8 @@ char **elem;
 
 extern int x;
 extern int y;
-
+extern int prev_x_pos;
+extern int prev_y_pos;
 
 
 void SolarisGraphics()
@@ -36,12 +37,12 @@ void SolarisGraphics()
     clock_gettime(CLOCK_MONOTONIC, &from_start);
     current_time = from_start;
 
-/* Creating Screen */
+    /* Creating Screen */
 
-create_table();
-get_square();
+    create_table();
+    get_square();
 
-/* End */
+    /* End */
 
     while (1)
     {
@@ -62,7 +63,7 @@ if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
         ips = ifs / (from_start_time / 1000);
     }
-    printf("time = %4d\tifs = %4d\tips = %4d\tx = %3d\ty = %3d\n", (from_start_time / 1000), ifs, ips,x,y);
+    printf("time = %4d\tifs = %4d\tips = %4d\txy = %3d,%3d\told_xy = %3d,%3d\n", (from_start_time / 1000), ifs, ips, x, y, prev_x_pos, prev_y_pos);
 }
 
             start_time = current_time;
