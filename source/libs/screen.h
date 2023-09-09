@@ -9,6 +9,7 @@
 #define LENGTH 100
 #define MAX_ELEMENTS 256
 
+FILE *debug_file;
 extern int DEBUG;
 
 struct element {
@@ -96,19 +97,19 @@ void create_element(int x, int y, char skin) {
     elements_count++;
 }
 
-void moving_dot(struct element elem)
+void moving_dot(struct element *elem)
 {
-    int x = elem.x_pos;
-    int y = elem.y_pos;
-    int prev_x_pos = elem.prev_x_pos;
-    int prev_y_pos = elem.prev_y_pos;
-    int x_spd = elem.x_spd;
-    int y_spd = elem.y_spd;
-    char charc = elem.skin;
-    elem.prev_skin = elem.skin;
+    int x = elem->x_pos;
+    int y = elem->y_pos;
+    int prev_x_pos = elem->prev_x_pos;
+    int prev_y_pos = elem->prev_y_pos;
+    int x_spd = elem->x_spd;
+    int y_spd = elem->y_spd;
+    char charc = elem->skin;
+    elem->prev_skin = elem->skin;
 
-    elem.prev_x_pos = x;
-    elem.prev_y_pos = y;
+//    elem->prev_x_pos = x;
+//    elem->prev_y_pos = y;
 
     if (x <= 1 || x >= HEIGHT - 2)
     {
@@ -119,8 +120,10 @@ void moving_dot(struct element elem)
         y_spd = -y_spd;
     }
 
-    elem.x_pos = x + x_spd;
-    elem.y_pos = y + y_spd;
+    elem->x_pos = x + x_spd;
+    elem->y_pos = y + y_spd;
+
+    fprintf(debug_file, "%3d,%3d\tMOV\n",elem->x_pos,elem->y_pos);
 }
 
 char **get_elements()
@@ -128,18 +131,22 @@ char **get_elements()
 //    void **temp = moving_dot();
 //    void *elem[6] = {*(int **) temp, *(int **) (temp + 1),*(int **) (temp + 2), *(int **) (temp + 3), *(char **) (temp + 4), *(char **) (temp + 5)};
 
+    debug_file = fopen("DEBUG_OUTPUT", "a");
+
     int c = 0;
     while (c < sizeof(elements_list))
     {
-        struct element elem;
-        elem = elements_list[c];
+        struct element * Pelem = &elements_list[c];
 
-        moving_dot(elem);
+        moving_dot(Pelem);
+
+        struct element elem = elements_list[c];
+        fprintf(debug_file, "%3d,%3d\tAFT\n",elem.x_pos,elem.y_pos);
 
         int x_pos = elem.x_pos;
         int y_pos = elem.y_pos;
 
-        printf ("%d:%d",x_pos,y_pos);
+        fprintf(debug_file, "%3d,%3d\t%d\n",x_pos,y_pos,c);
 
         int prev_x_pos = elem.prev_x_pos;
         int prev_y_pos = elem.prev_y_pos;
@@ -148,7 +155,6 @@ char **get_elements()
         char chr = elem.skin;
         char prev_char = elem.prev_skin;
 
-
         table[x_pos][y_pos] = chr;
         if (prev_x_pos < 0 || prev_y_pos < 0) {
             break;
@@ -156,6 +162,9 @@ char **get_elements()
             table[prev_x_pos][prev_y_pos] = prev_char;
         }
     }
+
+    fclose(debug_file);
+
 
     return table;
 }

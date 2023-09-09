@@ -64,6 +64,7 @@ void SolarisGraphics()
 
         if (elapsed_time >= FREQUENCY)
         {
+
             current_table = get_elements();
             show(current_table);
 
