@@ -122,6 +122,8 @@ void moving_dot(struct element *elem)
 
     elem->x_pos = x + x_spd;
     elem->y_pos = y + y_spd;
+    elem->x_spd = x_spd;
+    elem->y_spd = y_spd;
 
     fprintf(debug_file, "%3d,%3d\tMOV\n",elem->x_pos,elem->y_pos);
 }
