@@ -129,10 +129,6 @@ char **get_elements()
 
         struct element elem = elements_list[c];
 
-        fprintf(debug_file, "PREV %3d,%3d\n",elem.prev_x_pos,elem.prev_y_pos);
-        fprintf(debug_file, "size is %d, iteration is %d\n",elements_count,c);
-
-
         int x_pos = elem.x_pos;
         int y_pos = elem.y_pos;
         int prev_x_pos = elem.prev_x_pos;

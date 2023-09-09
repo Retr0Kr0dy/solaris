@@ -28,13 +28,6 @@ char **current_table;
 struct rusage usage;
 long mem;
 
-/*
-extern int x;
-extern int y;
-extern int prev_x_pos;
-extern int prev_y_pos;
-*/
-
 void SolarisGraphics()
 {
     clock_gettime(CLOCK_MONOTONIC, &start_time);
@@ -50,6 +43,9 @@ void SolarisGraphics()
 
     create_element(25,50,'O');
     create_element(11,11,'X');
+    create_element(14,48,'I');
+    create_element(43,65,'%');
+
 
     /* End */
 
