@@ -49,6 +49,7 @@ void SolarisGraphics()
     get_square();
 
     create_element(25,50,'O');
+    create_element(11,11,'X');
 
     /* End */
 

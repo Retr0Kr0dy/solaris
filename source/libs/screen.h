@@ -72,16 +72,7 @@ char **get_background() {
 
     return table;
 }
-/*
-static int x = 25;
-static int y = 50;
-int prev_x_pos;
-int prev_y_pos;
-int x_spd = 1;
-int y_spd = 1;
-static char charc = 'O';
-static char prev_char = ' ';
-*/
+
 void create_element(int x, int y, char skin) {
     struct element new_elem;
     new_elem.x_pos = x;
@@ -101,15 +92,12 @@ void moving_dot(struct element *elem)
 {
     int x = elem->x_pos;
     int y = elem->y_pos;
-    int prev_x_pos = elem->prev_x_pos;
-    int prev_y_pos = elem->prev_y_pos;
+//    elem->prev_x_pos = elem->x_pos;
+//    elem->prev_y_pos = elem->y_pos;
     int x_spd = elem->x_spd;
     int y_spd = elem->y_spd;
     char charc = elem->skin;
     elem->prev_skin = elem->skin;
-
-//    elem->prev_x_pos = x;
-//    elem->prev_y_pos = y;
 
     if (x <= 1 || x >= HEIGHT - 2)
     {
@@ -130,26 +118,23 @@ void moving_dot(struct element *elem)
 
 char **get_elements()
 {
-//    void **temp = moving_dot();
-//    void *elem[6] = {*(int **) temp, *(int **) (temp + 1),*(int **) (temp + 2), *(int **) (temp + 3), *(char **) (temp + 4), *(char **) (temp + 5)};
-
     debug_file = fopen("DEBUG_OUTPUT", "a");
 
     int c = 0;
-    while (c < sizeof(elements_list))
+    while (c < elements_count)
     {
         struct element * Pelem = &elements_list[c];
 
         moving_dot(Pelem);
 
         struct element elem = elements_list[c];
-        fprintf(debug_file, "%3d,%3d\tAFT\n",elem.x_pos,elem.y_pos);
+
+        fprintf(debug_file, "PREV %3d,%3d\n",elem.prev_x_pos,elem.prev_y_pos);
+        fprintf(debug_file, "size is %d, iteration is %d\n",elements_count,c);
+
 
         int x_pos = elem.x_pos;
         int y_pos = elem.y_pos;
-
-        fprintf(debug_file, "%3d,%3d\t%d\n",x_pos,y_pos,c);
-
         int prev_x_pos = elem.prev_x_pos;
         int prev_y_pos = elem.prev_y_pos;
         int x_spd = elem.x_spd;
@@ -159,10 +144,12 @@ char **get_elements()
 
         table[x_pos][y_pos] = chr;
         if (prev_x_pos < 0 || prev_y_pos < 0) {
-            break;
+
         } else {
             table[prev_x_pos][prev_y_pos] = prev_char;
         }
+
+        c++;
     }
 
     fclose(debug_file);
