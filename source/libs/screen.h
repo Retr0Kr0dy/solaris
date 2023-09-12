@@ -27,9 +27,18 @@ char *table[HEIGHT];
 struct element elements_list[MAX_ELEMENTS];
 int elements_count = 0;
 
-void show_char(int x, int y, char c)
+void show_char(struct element *elem)
 {
-    printf("\033[%d;%dH%c", y, x, c);
+    int x = elem->x_pos;
+    int y = elem->y_pos;
+    int px = elem->prev_x_pos;
+    int py = elem->prev_y_pos;
+    char c = elem->skin;
+    char pc = elem->prev_skin;
+
+
+    printf("\033[%d;%dH%c", x+1, y+1, c);
+    printf("\033[%d;%dH%c", px+1, py+1, pc);
 }
 
 
@@ -43,9 +52,6 @@ void show(char **table) {
         }
         printf ("\n");
     }
-
-    show_char(15,15,'8');
-
 }
 
 void **create_table() {
@@ -155,6 +161,8 @@ char **get_elements()
         } else {
             table[prev_x_pos][prev_y_pos] = prev_char;
         }
+
+        show_char (Pelem);
 
         c++;
     }

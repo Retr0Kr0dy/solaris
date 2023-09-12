@@ -39,7 +39,7 @@ void SolarisGraphics()
     /* Creating Screen */
 
     create_table();
-    get_square();
+    show(get_background());
 
     create_element(25,50,'O');
     create_element(11,11,'X');
@@ -62,8 +62,7 @@ void SolarisGraphics()
         if (elapsed_time >= FREQUENCY)
         {
 
-            current_table = get_elements();
-            show(current_table);
+            get_elements();
 
 if (DEBUG) {
     if ((from_start_time / 1000) != 0) {
