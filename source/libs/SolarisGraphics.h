@@ -76,6 +76,7 @@ if (DEBUG) {
         mem = 0;
     }
 
+    printf("\033[%d;0H",HEIGHT+1);
     printf("time = %4d\tffs = %4d\tfps = %4d\tmem = %ld Kb\n", (from_start_time / 1000), _ffs, _fps, mem);
     printf("xy = %3d,%3d\told_xy = %3d,%3d\n", elements_list[0].x_pos, elements_list[0].y_pos, elements_list[0].prev_x_pos, elements_list[0].prev_y_pos);
 

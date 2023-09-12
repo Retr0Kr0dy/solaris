@@ -27,16 +27,26 @@ char *table[HEIGHT];
 struct element elements_list[MAX_ELEMENTS];
 int elements_count = 0;
 
+void show_char(int x, int y, char c)
+{
+    printf("\033[%d;%dH%c", y, x, c);
+}
+
+
+
 void show(char **table) {
     printf ("\033[H\033[2J");
+
     for (int i = 0; i < HEIGHT; i++) {
         for (int j = 0; j < LENGTH; j++) {
             printf ("%c", table[i][j]);
         }
         printf ("\n");
     }
-}
 
+    show_char(15,15,'8');
+
+}
 
 void **create_table() {
   for (int i = 0; i < HEIGHT; i++) {
