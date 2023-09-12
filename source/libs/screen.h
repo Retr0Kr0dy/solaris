@@ -92,12 +92,12 @@ void moving_dot(struct element *elem)
 {
     int x = elem->x_pos;
     int y = elem->y_pos;
-//    elem->prev_x_pos = elem->x_pos;
-//    elem->prev_y_pos = elem->y_pos;
+    elem->prev_x_pos = elem->x_pos;
+    elem->prev_y_pos = elem->y_pos;
     int x_spd = elem->x_spd;
     int y_spd = elem->y_spd;
     char charc = elem->skin;
-    elem->prev_skin = elem->skin;
+
 
     if (x <= 1 || x >= HEIGHT - 2)
     {
@@ -110,6 +110,7 @@ void moving_dot(struct element *elem)
 
     elem->x_pos = x + x_spd;
     elem->y_pos = y + y_spd;
+    elem->prev_skin = table[elem->x_pos][elem->y_pos];
     elem->x_spd = x_spd;
     elem->y_spd = y_spd;
 
