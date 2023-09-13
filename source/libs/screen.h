@@ -21,6 +21,8 @@ struct element {
     int y_spd;
     char skin;
     char prev_skin;
+    int color;
+    int prev_color;
 };
 
 char *table[HEIGHT];
@@ -35,10 +37,12 @@ void show_char(struct element *elem)
     int py = elem->prev_y_pos;
     char c = elem->skin;
     char pc = elem->prev_skin;
+    int col = elem->color;
+    int pcol = elem->prev_color;
 
 
-    printf("\033[%d;%dH%c", x+1, y+1, c);
-    printf("\033[%d;%dH%c", px+1, py+1, pc);
+    printf("\033[%d;%dH\033[48;5;%dm%c", x+1, y+1, col, c);
+    printf("\033[%d;%dH\033[48;5;%dm%c", px+1, py+1, pcol, pc);
 }
 
 
@@ -89,7 +93,7 @@ char **get_background() {
     return table;
 }
 
-void create_element(int x, int y, char skin) {
+void create_element(int x, int y, char skin, int color) {
     struct element new_elem;
     new_elem.x_pos = x;
     new_elem.y_pos = y;
@@ -99,6 +103,9 @@ void create_element(int x, int y, char skin) {
     new_elem.y_spd = 1;
     new_elem.skin = skin;
     new_elem.prev_skin = '$';
+    new_elem.color = color;
+    new_elem.prev_color = 0;
+
 
     elements_list[elements_count] = new_elem;
     elements_count++;

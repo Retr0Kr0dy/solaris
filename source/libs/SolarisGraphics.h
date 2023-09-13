@@ -12,7 +12,7 @@ void show(char **table);
 void **create_table();
 void **get_square();
 char **get_background();
-void create_element(int x, int y, char skin);
+void create_element(int x, int y, char skin, int color);
 char **get_elements();
 
 
@@ -41,10 +41,10 @@ void SolarisGraphics()
     create_table();
     show(get_background());
 
-    create_element(25,50,'O');
-    create_element(11,11,'X');
-    create_element(14,48,'I');
-    create_element(43,65,'%');
+    create_element(25,50,' ',82);
+    create_element(11,11,' ',9);
+    create_element(14,48,' ',13);
+    create_element(43,65,' ',11);
 
 
     /* End */
