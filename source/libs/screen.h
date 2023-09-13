@@ -1,29 +1,16 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include "const.h"
+#include "logic.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-#define HEIGHT 50
-#define LENGTH 100
 #define MAX_ELEMENTS 256
 
 FILE *debug_file;
 extern int DEBUG;
-
-struct element {
-    int x_pos;
-    int y_pos;
-    int prev_x_pos;
-    int prev_y_pos;
-    int x_spd;
-    int y_spd;
-    char skin;
-    char prev_skin;
-    int color;
-    int prev_color;
-};
 
 char *table[HEIGHT];
 struct element elements_list[MAX_ELEMENTS];
@@ -44,8 +31,6 @@ void show_char(struct element *elem)
     printf("\033[%d;%dH\033[48;5;%dm%c", x+1, y+1, col, c);
     printf("\033[%d;%dH\033[48;5;%dm%c", px+1, py+1, pcol, pc);
 }
-
-
 
 void show(char **table) {
     printf ("\033[H\033[2J");
@@ -76,7 +61,6 @@ void **get_square() {
     }
   }
 }
-
 
 char **get_background() {
     for (int i = 0; i < HEIGHT; i++) {
@@ -109,35 +93,6 @@ void create_element(int x, int y, char skin, int color) {
 
     elements_list[elements_count] = new_elem;
     elements_count++;
-}
-
-void moving_dot(struct element *elem)
-{
-    int x = elem->x_pos;
-    int y = elem->y_pos;
-    elem->prev_x_pos = elem->x_pos;
-    elem->prev_y_pos = elem->y_pos;
-    int x_spd = elem->x_spd;
-    int y_spd = elem->y_spd;
-    char charc = elem->skin;
-
-
-    if (x <= 1 || x >= HEIGHT - 2)
-    {
-        x_spd = -x_spd;
-    }
-    if (y <= 1 || y >= LENGTH - 2)
-    {
-        y_spd = -y_spd;
-    }
-
-    elem->x_pos = x + x_spd;
-    elem->y_pos = y + y_spd;
-    elem->prev_skin = table[elem->x_pos][elem->y_pos];
-    elem->x_spd = x_spd;
-    elem->y_spd = y_spd;
-
-    fprintf(debug_file, "%3d,%3d\tMOV\n",elem->x_pos,elem->y_pos);
 }
 
 char **get_elements()
